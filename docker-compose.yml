@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+  db:
+    container_name: open-party-db
+    image: postgres:10
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./tmp/db/data:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+
+  db-admin:
+    container_name: open-party-db-admin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@open-party.com
+      PGADMIN_DEFAULT_PASSWORD: passw0rd
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+
+  redis:
+    container_name: open-party-redis
+    image: redis
+    ports:
+      - 6379:6379
+
+  development:
+    container_name: open-party-development
+    image: open-party:latest
+    build:
+      context: .
+    volumes:
+      - ./:/usr/src:delegated
+    environment:
+      NODE_ENV: development
+    ports:
+      - '3000-3030:3000-3030'
+    depends_on:
+      - db
+      - redis
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/sh -l

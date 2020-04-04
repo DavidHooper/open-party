@@ -1,0 +1,12 @@
+{
+  "name": "open-party",
+  "version": "0.1.0",
+  "description": "Open party monorepo.",
+  "main": "index.js",
+  "scripts": {
+    "launch:container": "./scripts/launch-container",
+    "ssh:container": "./scripts/ssh-container"
+  },
+  "author": "",
+  "license": "MIT"
+}
