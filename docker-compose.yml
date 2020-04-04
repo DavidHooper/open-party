@@ -6,6 +6,7 @@ services:
     image: postgres:10
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ./tmp/db/data:/var/lib/postgresql/data/pgdata
     ports:
